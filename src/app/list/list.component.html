@@ -1,0 +1,11 @@
+<div class="list-wrapper">
+    <ul class="course-list" *ngFor = "let item of list">
+        <li>{{item.title}}</li>
+    </ul>
+    <hr>
+    <h2>Vehicle Data</h2>
+    <ul class="vehicle-list" *ngIf="vehicleData.length > 0">
+        <li  *ngFor = "let item of vehicleData" >{{item.title}}</li>
+    </ul>
+    
+</div>
