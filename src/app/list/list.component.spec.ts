@@ -1,58 +1,42 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppService } from '../app.service';
 
 import { ListComponent } from './list.component';
 
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
-  let el:DebugElement;
-  const vehicleData=[
-    {
-      title:"Mclaren",
-      type:"Car"
-    },
-    {
-      title:"Yamaha",
-      type:"Bike"
-    },
-    {
-      title:"BMW",
-      type:"car"
-    },
-    {
-      title:"Royal Enfield",
-      type:"bike"
-    }
-  ];
+  let el: DebugElement;
 
-  beforeEach(async () => {
-    const appServiceSpy= jest.spyOn(AppService,'getVehicleData')
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       declarations: [ ListComponent ],
-      providers:[{provide:AppService, useValue:appServiceSpy}]
-    })
-    .compileComponents();
-    fixture = TestBed.createComponent(ListComponent);
-    component = fixture.componentInstance;
-    el=fixture.debugElement; //to get native el
-    fixture.detectChanges();
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(ListComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
+    });
+  }));
 
-  });
-
-  it('should create', () => {
+  test('should verify the component to be created', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display all list items',()=>{
-      const cards =el.queryAll(By.css(".course-list")); //query selector of angular teesting mod to get dom elements
-      expect(cards).toBeTruthy();
-      expect(cards.length).toBe(4);
-  })
-
-  it('should display all vehicleData',()=>{
-
-  })
+  it('should display a card', () => {
+    const mockData = {
+      userId: 1,
+      id: 1,
+      title: 'Test Title',
+      body: 'Test Body'
+    };
+    component.postData = mockData;
+    fixture.detectChanges();
+    const card = el.queryAll(By.css('.card'));
+    const cardTitle = el.query(By.css('.card-title'));
+    const cardContent = el.query(By.css('.card-text'));
+    expect(card.length).toBe(1);
+    expect(cardTitle.nativeElement.textContent).toBe(mockData.title);
+    expect(cardContent.nativeElement.textContent).toBe(mockData.body);
+  });
 });
