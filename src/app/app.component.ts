@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 import { AppService } from './app.service';
 import { ModalComponent } from './modal/modal.component';
 
@@ -9,28 +10,21 @@ import { ModalComponent } from './modal/modal.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'jest-demo';
+  title = 'Jest Testing';
+  posts$: Observable<any> = new Observable();
   postData: any[] = [];
 
-  constructor(private serv: AppService, private modalService: NgbModal) {
-
-  }
+  constructor(private service: AppService, private modalService: NgbModal) {}
 
   ngOnInit(): void{
-    this.serv.getPost().subscribe((res: any[]) => {
-      console.log(res);
+    this.posts$ = this.service.getPost();
+    this.posts$.subscribe((res: any[]) => {
       this.postData = res;
     });
-
-    // this.serv.saveUser(2,{ title: 'Angular PUT Request Example' }).subscribe((data)=>{
-    //   console.log(data);
-
-    // })
   }
 
   open(): void{
     const modalRef = this.modalService.open(ModalComponent);
-    modalRef.componentInstance.name = 'World';
     modalRef.closed.subscribe(post => {
       this.postData.unshift(post);
     });
