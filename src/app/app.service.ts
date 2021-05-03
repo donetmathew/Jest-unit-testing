@@ -38,8 +38,4 @@ export class AppService {
     // const body = { title: 'Angular PUT Request Example' };
     return this.http.put('https://jsonplaceholder.typicode.com/posts/' + id, body);
   }
-
-  getVehicleData(): Observable<any> {
-    return of(this.arr);
-  }
 }

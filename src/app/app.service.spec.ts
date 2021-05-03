@@ -67,7 +67,7 @@ describe('ApiService',()=>{
             expect(user.title).toBe("et porro tempora");
             done();
         });
-        const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts'); //expect one is the fake api call and it checks whether the api is called only once
+        const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts'); // it checks whether the api is called only once and returns mock http req.     
         expect(req.request.method).toEqual("GET");
         req.flush(mockData); // pass data to the mock api created
     });
@@ -77,7 +77,6 @@ describe('ApiService',()=>{
 
       const change = { title: 'Angular PUT Request Example' };
       ApiService.savePost(2,change).subscribe((data:any)=>{
-        console.log(data);
           expect(data).toBeTruthy();
           expect(data.id).toBe(2);
           done();
@@ -100,5 +99,9 @@ describe('ApiService',()=>{
         expect(req.request.method).toEqual("PUT");
         req.flush('Save course failed',{status:500,statusText:"Internal server error"})
     })
+
+    afterEach(() => {
+      httpTestingController.verify();
+  });
    
 })
