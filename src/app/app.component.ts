@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void{
     this.posts$ = this.service.getPost();
     this.posts$.subscribe((res: any[]) => {
-      this.postData = res;
+      this.postData = res.slice(0, 10);
     });
   }
 
