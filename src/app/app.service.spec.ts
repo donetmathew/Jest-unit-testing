@@ -61,13 +61,13 @@ describe('ApiService',()=>{
   // });
 
     it('it should retrieve all value',(done)=>{
-        ApiService.getUsers().subscribe((res:any)=>{                        
+        ApiService.getPost().subscribe((res:any)=>{                        
             expect(res).toBeTruthy();
             const user=res.find((item:any)=> item.id == 4);
             expect(user.title).toBe("et porro tempora");
             done();
         });
-        const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/todos/'); //expect one is the fake api call and it checks whether the api is called only once
+        const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts'); //expect one is the fake api call and it checks whether the api is called only once
         expect(req.request.method).toEqual("GET");
         req.flush(mockData); // pass data to the mock api created
     });
@@ -76,7 +76,7 @@ describe('ApiService',()=>{
     it('should save the user',(done)=>{
 
       const change = { title: 'Angular PUT Request Example' };
-      ApiService.saveUser(2,change).subscribe((data:any)=>{
+      ApiService.savePost(2,change).subscribe((data:any)=>{
         console.log(data);
           expect(data).toBeTruthy();
           expect(data.id).toBe(2);
@@ -92,7 +92,7 @@ describe('ApiService',()=>{
     it('should give an error if save course fails',()=>{
       const change = { title: 'Angular PUT Request Example' };
 
-      ApiService.saveUser(12,change).subscribe(()=> fail("Save user api failed"),//to fail the saveCourse
+      ApiService.savePost(12,change).subscribe(()=> fail("Save user api failed"),//to fail the saveCourse
         (error:HttpErrorResponse)=>{
           expect(error.status).toBe(500);
         }) //error block gets executed once fapi failed
