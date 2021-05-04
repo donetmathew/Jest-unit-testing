@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-list',

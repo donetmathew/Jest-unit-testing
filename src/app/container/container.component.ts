@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { AppService } from '../app.service';
+import { ContainerService } from './container.service';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
@@ -15,7 +15,7 @@ export class ContainerComponent implements OnInit {
   posts$: Observable<any> = new Observable();
   postData: any[] = [];
 
-  constructor(private service: AppService, private modalService: NgbModal) {}
+  constructor(private service: ContainerService, private modalService: NgbModal) {}
 
   ngOnInit(): void{
     this.posts$ = this.service.getPost();

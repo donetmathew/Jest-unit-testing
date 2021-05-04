@@ -1,50 +1,50 @@
 import { TestBed } from '@angular/core/testing';
-import {AppService} from './app.service';
+import {ContainerService} from './container.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('ApiService', () => {
 
-    let ApiService: AppService;
+    let ApiService: ContainerService;
     let httpTestingController: HttpTestingController;
     const mockData = [
         {
-          'userId': 1,
-          'id': 1,
-          'title': 'delectus aut autem',
-          'completed': false
+          userId: 1,
+          id: 1,
+          title: 'delectus aut autem',
+          completed: false
         },
         {
-          'userId': 1,
-          'id': 2,
-          'title': 'quis ut nam facilis et officia qui',
-          'completed': false
+          userId: 1,
+          id: 2,
+          title: 'quis ut nam facilis et officia qui',
+          completed: false
         },
         {
-          'userId': 1,
-          'id': 3,
-          'title': 'fugiat veniam minus',
-          'completed': false
+          userId: 1,
+          id: 3,
+          title: 'fugiat veniam minus',
+          completed: false
         },
         {
-          'userId': 1,
-          'id': 4,
-          'title': 'et porro tempora',
-          'completed': true
+          userId: 1,
+          id: 4,
+          title: 'et porro tempora',
+          completed: true
         },
         {
-          'userId': 1,
-          'id': 5,
-          'title': 'laboriosam mollitia et enim quasi adipisci quia provident illum',
-          'completed': false
+          userId: 1,
+          id: 5,
+          title: 'laboriosam mollitia et enim quasi adipisci quia provident illum',
+          completed: false
     }];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [AppService]
+            providers: [ContainerService]
         });
-        ApiService = TestBed.inject(AppService);
+        ApiService = TestBed.inject(ContainerService);
         httpTestingController = TestBed.inject(HttpTestingController);
     });
 
