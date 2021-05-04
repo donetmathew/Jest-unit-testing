@@ -1,12 +1,1 @@
-<div class="container-fluid">
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">{{title}}</a>
-    <button class="btn btn-link" (click)="open()">Add Post</button>
-
-  </nav>
-</div>
-<div class="container">
-  <div class="row" *ngFor="let post of postData" style="margin: 16px;">
-    <app-list [postData] = "post"></app-list>
-  </div>
-</div>
+<router-outlet></router-outlet>

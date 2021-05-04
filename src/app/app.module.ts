@@ -8,15 +8,26 @@ import { AppService } from './app.service';
 import { ListComponent } from './list/list.component';
 import { NgbModalRef, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal/modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContainerComponent } from './container/container.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
-    ModalComponent
+    ModalComponent,
+    ContainerComponent,
+    LoginComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
 
   providers: [AppService],
   bootstrap: [AppComponent],
