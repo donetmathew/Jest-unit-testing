@@ -20,5 +20,6 @@ import { FormsModule } from '@angular/forms';
 
   providers: [AppService],
   bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

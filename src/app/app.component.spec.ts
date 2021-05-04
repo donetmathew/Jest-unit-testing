@@ -1,16 +1,34 @@
-import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { APP_BASE_HREF } from '@angular/common';
+import { ApplicationRef, DebugElement } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { Observable, of, scheduled } from 'rxjs';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 import { AppService } from './app.service';
-import { ListComponent } from './list/list.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { click } from './utility-methods';
+
+export class MockNgbModalRef {
+  closed: Observable<any> = of(newUser);
+}
+
+const newUser = {
+  userId: 2,
+  id: 11,
+  title: 'New data',
+  body: 'New body'
+};
 
 describe('App Component', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let el: DebugElement;
   let appService: any;
+  let modalService: NgbModal;
+  let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
+  let applicationRef: ApplicationRef;
 
   const mockData = [
     {
@@ -81,16 +99,23 @@ describe('App Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, ListComponent],
+      declarations: [],
       providers: [{
         provide: AppService,
         useValue: appMockService
-      }]
+      },
+      {
+        provide: APP_BASE_HREF,
+        useValue: '/'
+      }],
+      imports: [AppModule, NoopAnimationsModule],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(AppComponent);
       component = fixture.componentInstance;
       el = fixture.debugElement;
+      modalService = TestBed.inject(NgbModal);
       appService = TestBed.inject(AppService);
+      applicationRef = TestBed.inject(ApplicationRef);
     });
   }));
 
@@ -127,4 +152,38 @@ describe('App Component', () => {
     expect(cardList.length).toBe(10);
   });
 
+  it('should open modal', fakeAsync(() => {
+    appService.getPost.mockReturnValue(of(mockData));
+    fixture.detectChanges();
+    spyOn(modalService, 'open').and.returnValue(mockModalRef);
+    component.open();
+    flush();
+    expect(modalService.open).toBeCalled();
+  }));
+
+  it('should update the postData', fakeAsync(() => {
+    appService.getPost.mockReturnValue(of(mockData));
+    fixture.detectChanges();
+    spyOn(modalService, 'open').and.returnValue(mockModalRef);
+    component.open();
+    flush();
+    expect(component.postData[0]).toEqual(newUser);
+  }));
+
+  // it('should open the modal when add post link is clicked', fakeAsync(() => {
+  //   appService.getPost.mockReturnValue(of(mockData));
+  //   const link = el.query(By.css('.btn-link'));
+  //   expect(link.nativeElement.textContent).toBe('Add Post');
+  //   console.log(link.nativeElement.textContent);
+  //   link.nativeElement.click();
+  //   fixture.detectChanges();
+  //   tick();
+  //   // applicationRef.tick();
+  //   const modal = el.query(By.css('nav'));
+  //   console.log(modal);
+  //   // expect(modal[0].nativeElement).toBeTruthy();
+  // }));
+
 });
+
+
