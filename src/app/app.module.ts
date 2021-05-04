@@ -13,6 +13,10 @@ import { LoginComponent } from './login/login.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { reducers, metaReducers } from './@ngrx/Login-store/login-reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { LoginEffect } from './@ngrx/Login-store/login-effects';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -29,11 +33,13 @@ import { environment } from '../environments/environment';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([LoginEffect])
   ],
 
   bootstrap: [AppComponent],
-  entryComponents: [ModalComponent]
+  entryComponents: [ModalComponent],
+  providers: [AuthGuard]
 })
 export class AppModule { }
