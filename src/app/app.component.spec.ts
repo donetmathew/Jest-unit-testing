@@ -1,5 +1,5 @@
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
@@ -108,16 +108,16 @@ describe('App Component', () => {
     expect(navBarHeading.nativeElement.textContent).toBe(title);
   });
 
-  test('should verify the post observable', (done) => {
+  test('should verify the post observable', fakeAsync(() => {
     appService.getPost.mockReturnValue(of(mockData));
     fixture.detectChanges();
     expect(component.posts$).toBeTruthy();
     component.posts$.subscribe((posts) => {
       expect(posts.length).toBe(10);
       expect(posts.length).not.toBe(9);
-      done();
     });
-  });
+    flush();
+  }));
 
   test('should verify the post cards in UI', () => {
     appService.getPost.mockReturnValue(of(mockData));

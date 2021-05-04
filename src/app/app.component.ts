@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  open(): void{
-    const modalRef = this.modalService.open(ModalComponent);
-    modalRef.closed.subscribe(post => {
-      this.postData.unshift(post);
-    });
-  }
+  // open(): void{
+  //   const modalRef = this.modalService.open(ModalComponent);
+  //   modalRef.closed.subscribe(post => {
+  //     this.postData.unshift(post);
+  //   });
+  // }
 }
 
