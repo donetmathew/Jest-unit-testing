@@ -8,8 +8,7 @@ import { AppState } from '../@ngrx/reducers';
 import { isLogin } from '../@ngrx/Login-store/login-selectors';
 import { AuthActions } from '../@ngrx/Login-store/login-action-type';
 import { ContainerActions } from '../@ngrx/Container-store/container-action-types';
-import { getAllPost, postData } from '../@ngrx/Container-store/container-selectors';
-import { login } from '../@ngrx/Login-store/login-actions';
+import { getAllPost } from '../@ngrx/Container-store/container-selectors';
 
 @Component({
   selector: 'app-container',

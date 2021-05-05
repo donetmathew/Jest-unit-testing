@@ -67,28 +67,33 @@ describe('ApiService', () => {
 
     it('should save the user', (done) => {
 
-      const change = { title: 'Angular PUT Request Example' };
-      ApiService.savePost(2, change).subscribe((data: any) => {
+      const change = {
+        id: 11,
+        userId: 2,
+        title: 'Angular PUT Request Example',
+        body: 'Test body'
+      };
+      ApiService.savePost(change).subscribe((data: any) => {
           expect(data).toBeTruthy();
-          expect(data.id).toBe(2);
+          expect(data.id).toBe(11);
           done();
       });
-      const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts/2');
-      expect(req.request.method).toEqual('PUT');
+      const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts');
+      expect(req.request.method).toEqual('POST');
       expect(req.request.body.title).toEqual(change.title);
-      req.flush({...mockData[1], ...change});
+      req.flush({...mockData, ...change});
 
     });
 
     it('should give an error if save course fails', () => {
       const change = { title: 'Angular PUT Request Example' };
 
-      ApiService.savePost(12, change).subscribe(() => fail('Save user api failed'), // to fail the saveCourse
+      ApiService.savePost(change).subscribe(() => fail('Save user api failed'), // to fail the saveCourse
         (error: HttpErrorResponse) => {
           expect(error.status).toBe(500);
         }); // error block gets executed once fapi failed
-      const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts/12');
-      expect(req.request.method).toEqual('PUT');
+      const req = httpTestingController.expectOne('https://jsonplaceholder.typicode.com/posts');
+      expect(req.request.method).toEqual('POST');
       req.flush('Save course failed', {status: 500, statusText: 'Internal server error'});
     });
 

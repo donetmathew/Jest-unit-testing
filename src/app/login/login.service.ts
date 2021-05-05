@@ -14,9 +14,7 @@ export interface User {
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) {
-    this.http.get<User>('../../assets/user.json');
-  }
+  constructor(private http: HttpClient) {}
 
   login(user: User): Observable<User> {
     return this.http.get<User[]>('../../assets/user.json').pipe(

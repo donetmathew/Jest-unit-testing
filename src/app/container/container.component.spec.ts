@@ -158,17 +158,19 @@ describe('App Component', () => {
     spyOn(modalService, 'open').and.returnValue(mockModalRef);
     component.open();
     flush();
-    expect(modalService.open).toBeCalled();
+    expect(modalService.open).toHaveBeenCalled();
   }));
 
-  it('should update the postData', fakeAsync(() => {
-    containerService.getPost.mockReturnValue(of(mockData));
-    fixture.detectChanges();
-    spyOn(modalService, 'open').and.returnValue(mockModalRef);
-    component.open();
-    flush();
-    // expect(component.postData[0]).toEqual(newUser);
-  }));
+  // it('should update the postData', fakeAsync(() => {
+  //   containerService.getPost.mockReturnValue(of(mockData));
+  //   fixture.detectChanges();
+  //   spyOn(modalService, 'open').and.returnValue(mockModalRef);
+  //   component.open();
+  //   component.postData$.subscribe(posts => {
+  //     expect(posts.length).toBe(11);
+  //     tick(1000);
+  //   });
+  // }));
 
   // it('should open the modal when add post link is clicked', fakeAsync(() => {
   //   containerService.getPost.mockReturnValue(of(mockData));
