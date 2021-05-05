@@ -3,10 +3,8 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { login, logout } from './@ngrx/Login-store/login-actions';
-import { AppState } from './@ngrx/Login-store/login-reducers';
+import { AppState } from './@ngrx/reducers';
 import { isLogin } from './@ngrx/Login-store/login-selectors';
-import { User } from './login/login.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

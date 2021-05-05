@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-
+export interface Post {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -15,7 +20,9 @@ export class ContainerService {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
   }
 
-  savePost(id: number, body: any): Observable<any> {
-    return this.http.put('https://jsonplaceholder.typicode.com/posts/' + id, body);
+  savePost(body: any): Observable<any> {
+    return this.http.post('https://jsonplaceholder.typicode.com/posts', body, {
+      headers: {'Content-type': 'application/json; charset=UTF-8'}
+    });
   }
 }
